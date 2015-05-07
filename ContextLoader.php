@@ -78,7 +78,8 @@ class ContextLoader {
      * return $this;
      */
     public function useCache() {
-        $this->cacheFile    = PATH_site . '/typo3temp/Cache/Code/cache_phpcode/cron_context_conf.php';
+        // TODO: maybe the caching is not safe for race conditions
+        $this->cacheFile = PATH_site . '/typo3temp/Cache/Code/cache_phpcode/cron_context_conf.php';
         return $this;
     }
 

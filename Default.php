@@ -16,8 +16,6 @@ $confLoader
     ->addContextConfiguration(PATH_site . '/typo3conf/AdditionalConfiguration')
         // Add local configuration
     ->addConfiguration(PATH_site . '/typo3conf/AdditionalConfiguration/Local.php')
-        // Use TYPO3_CONF caching (only in production context)
-    ->useCacheInProduction()
         // Load configuration files (maybe cached)
     ->loadConfiguration()
         // Add context name to sitename (if in development context)
