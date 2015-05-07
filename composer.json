@@ -1,0 +1,10 @@
+{
+	"name": "cron/cron-context",
+	"type": "typo3-cms-extension",
+	"description": "Cron Context configuration loader",
+	"homepage": "https://gitlab.cron.eu/cron/t3x-cron_context",
+	"license": ["GPL-2.0+"],
+	"keywords": ["TYPO3 CMS"],
+	"version": "1.0.0"
+}
+
