@@ -2,7 +2,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Cron :: Context configuration',
-	'description' => 'TYPO3_CONTEXT automatic configuration',
+	'description' => 'Cron TYPO3_CONTEXT configuration loader',
 	'category' => 'system',
 	'shy' => 0,
 	'dependencies' => 'cms',
