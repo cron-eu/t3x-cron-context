@@ -80,7 +80,7 @@ class ContextLoader {
      */
     public function checkEnvironment() {
         // Check CLI mode
-        if (defined('TYPO3_cliMode') && $this->strictMode) {
+        if (defined('TYPO3_cliMode')) {
             $contextEnv = getenv('TYPO3_CONTEXT');
 
             if (empty($contextEnv)) {
