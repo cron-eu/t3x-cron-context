@@ -181,7 +181,7 @@ class ContextLoader {
             foreach ($this->confPathList['context'] as $path) {
                 foreach ($this->contextList as $context) {
                     // Sanitize context name
-                    $context = preg_replace('/[^-_a-zA-Z0-9\/]/', '', $context);
+                    $context = preg_replace('/[^-_\.a-zA-Z0-9\/]/', '', $context);
 
                     // Build config file name
                     $this->loadConfigurationFile($path . '/' . $context . '.php');
