@@ -69,7 +69,27 @@ class ContextLoader {
         define('CRON_TYPO3_ADDITIONALCONFIGURATION', 1);
 
         $this->applicationContext = GeneralUtility::getApplicationContext();
+        $this->checkEnvironment();
         $this->buildContextList();
+    }
+
+    /**
+     * Check environment
+     *
+     * @return $this
+     */
+    public function checkEnvironment() {
+        // Check CLI mode
+        if (defined('TYPO3_cliMode') && $this->strictMode) {
+            $contextEnv = getenv('TYPO3_CONTEXT');
+
+            if (empty($contextEnv)) {
+                echo '[ERROR] TYPO3_CONTEXT not set or found for AdditionalConfiguration.php' . "\n";
+                exit(1);
+            }
+        }
+
+        return $this;
     }
 
     /**
