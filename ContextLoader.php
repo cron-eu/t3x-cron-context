@@ -32,7 +32,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *    -> typo3conf/AdditionalConfiguration/Production/Live/Server4711.php
  *
  */
-class ContextLoader {
+class ContextLoader
+{
 
     /**
      * Application context
@@ -72,12 +73,26 @@ class ContextLoader {
     /**
      * Construct
      */
-    public function __construct() {
+    public function __construct()
+    {
         define('CRON_TYPO3_ADDITIONALCONFIGURATION', 1);
 
+        $this
+            ->init()
+            ->checkEnvironment()
+            ->buildContextList();
+    }
+
+    /**
+     * Init
+     *
+     * @return $this
+     */
+    public function init()
+    {
         $this->applicationContext = GeneralUtility::getApplicationContext();
-        $this->checkEnvironment();
-        $this->buildContextList();
+
+        return $this;
     }
 
     /**
@@ -85,7 +100,8 @@ class ContextLoader {
      *
      * @return $this
      */
-    public function checkEnvironment() {
+    public function checkEnvironment()
+    {
         // Check CLI mode
         if (defined('TYPO3_cliMode')) {
             $contextEnv = getenv('TYPO3_CONTEXT');
@@ -104,9 +120,11 @@ class ContextLoader {
      *
      * return $this;
      */
-    public function useCache() {
+    public function useCache()
+    {
         // TODO: maybe the caching is not safe for race conditions
         $this->cacheFile = PATH_site . '/typo3temp/Cache/Code/cache_phpcode/cron_context_conf.php';
+
         return $this;
     }
 
@@ -115,10 +133,12 @@ class ContextLoader {
      *
      * @return $this
      */
-    public function useCacheInProduction() {
+    public function useCacheInProduction()
+    {
         if ($this->applicationContext->isProduction()) {
             $this->useCache();
         }
+
         return $this;
     }
 
@@ -126,10 +146,13 @@ class ContextLoader {
      * Add path for automatic context loader
      *
      * @param string $path Path to file
+     *
      * @return $this
      */
-    public function addContextConfiguration($path) {
+    public function addContextConfiguration($path)
+    {
         $this->confPathList['context'][] = $path;
+
         return $this;
     }
 
@@ -137,10 +160,13 @@ class ContextLoader {
      * Add configuration to loader
      *
      * @param string $path Path to file
+     *
      * @return $this
      */
-    public function addConfiguration($path) {
+    public function addConfiguration($path)
+    {
         $this->confPathList['file'][] = $path;
+
         return $this;
     }
 
@@ -149,12 +175,14 @@ class ContextLoader {
      *
      * @return $this
      */
-    public function loadConfiguration() {
+    public function loadConfiguration()
+    {
         if (!$this->loadCache()) {
-            $this->loadContextConfiguration();
-            $this->loadFileConfiguration();
-            $this->injectExtensionConfiguration();
-            $this->buildCache();
+            $this
+                ->loadContextConfiguration()
+                ->loadFileConfiguration()
+                ->injectExtensionConfiguration()
+                ->buildCache();
         }
 
         return $this;
@@ -162,9 +190,12 @@ class ContextLoader {
 
     /**
      * Build context list
+     *
+     * @return $this
      */
-    protected function buildContextList() {
-        $contextList = array();
+    protected function buildContextList()
+    {
+        $contextList    = array();
         $currentContext = $this->applicationContext;
         do {
             $contextList[] = (string)$currentContext;
@@ -172,12 +203,15 @@ class ContextLoader {
 
         // Reverse list, general first (eg. PRODUCTION), then specific last (eg. SERVER)
         $this->contextList = array_reverse($contextList);
+
+        return $this;
     }
 
     /**
      * Load from cache
      */
-    protected function loadCache() {
+    protected function loadCache()
+    {
         $ret = false;
 
         if ($this->cacheFile && file_exists($this->cacheFile)) {
@@ -185,7 +219,7 @@ class ContextLoader {
 
             if (!empty($conf)) {
                 $GLOBALS['TYPO3_CONF_VARS'] = $conf;
-                $ret = true;
+                $ret                        = true;
             }
         }
 
@@ -194,17 +228,25 @@ class ContextLoader {
 
     /**
      * Build context config cache
+     *
+     * @return $this
      */
-    protected function buildCache() {
+    protected function buildCache()
+    {
         if ($this->cacheFile) {
             file_put_contents($this->cacheFile, serialize($GLOBALS['TYPO3_CONF_VARS']));
         }
+
+        return $this;
     }
 
     /**
      * Load configuration based on current context
+     *
+     * @return $this
      */
-    protected function loadContextConfiguration() {
+    protected function loadContextConfiguration()
+    {
         if (!empty($this->confPathList['context'])) {
             foreach ($this->confPathList['context'] as $path) {
                 foreach ($this->contextList as $context) {
@@ -216,26 +258,35 @@ class ContextLoader {
                 }
             }
         }
+
+        return $this;
     }
 
     /**
      * Load simple file configuration
+     *
+     * @return $this
      */
-    protected function loadFileConfiguration() {
+    protected function loadFileConfiguration()
+    {
         if (!empty($this->confPathList['file'])) {
             foreach ($this->confPathList['file'] as $path) {
                 $this->loadConfigurationFile($path);
             }
         }
+
+        return $this;
     }
 
     /**
      * Load configuration file
      *
      * @param string $configurationFile Configuration file
+     *
      * @return $this
      */
-    protected function loadConfigurationFile($configurationFile) {
+    protected function loadConfigurationFile($configurationFile)
+    {
         // Load config file
         if (file_exists($configurationFile)) {
             // Keep this variable for automatic injection into requried files!
@@ -255,19 +306,24 @@ class ContextLoader {
 
     /**
      * Inject dynamic extension configuration
+     *
+     * @return $this
      */
-    protected function injectExtensionConfiguration() {
+    protected function injectExtensionConfiguration()
+    {
         if (!empty($this->extensionConfList)) {
             $extConf = &$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'];
 
             foreach ($this->extensionConfList as $extension => $settingList) {
                 if (!empty($extConf[$extension])) {
-                    $conf = unserialize($extConf[$extension]);
-                    $conf = array_merge($conf, $settingList);
+                    $conf                = unserialize($extConf[$extension]);
+                    $conf                = array_merge($conf, $settingList);
                     $extConf[$extension] = serialize($conf);
                 }
             }
         }
+
+        return $this;
     }
 
     /**
@@ -275,10 +331,16 @@ class ContextLoader {
      *
      * @return $this
      */
-    public function appendContextNameToSitename() {
+    public function appendContextNameToSitename()
+    {
         if (!$this->applicationContext->isProduction()) {
-            $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] .= ' [[' . strtoupper((string)$this->applicationContext) . ']]';
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] = sprintf(
+                '%s [[%s]]',
+                $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+                strtoupper((string)$this->applicationContext
+            ));
         }
+
         return $this;
     }
 
@@ -288,9 +350,11 @@ class ContextLoader {
      * @param string $extension Extension name
      * @param string $setting   Configuration setting name
      * @param mixed  $value     Configuration value
+     *
      * @return $this
      */
-    public function setExtensionConfiguration($extension, $setting, $value = null) {
+    public function setExtensionConfiguration($extension, $setting, $value = null)
+    {
         $this->extensionConfList[$extension][$setting] = $value;
 
         return $this;
@@ -299,11 +363,13 @@ class ContextLoader {
     /**
      * Set extension configuration value (by list)
      *
-     * @param string $extension    Extension name
-     * @param array  $settingList  List of settings
+     * @param string $extension   Extension name
+     * @param array  $settingList List of settings
+     *
      * @return $this
      */
-    public function setExtensionConfigurationList($extension, array $settingList) {
+    public function setExtensionConfigurationList($extension, array $settingList)
+    {
         if (empty($this->extensionConfList[$extension])) {
             $this->extensionConfList[$extension] = $settingList;
         } else {
