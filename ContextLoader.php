@@ -63,6 +63,13 @@ class ContextLoader {
     protected $cacheFile;
 
     /**
+     * List of extension configuration overrides
+     *
+     * @var array
+     */
+    protected $extensionConfList = array();
+
+    /**
      * Construct
      */
     public function __construct() {
@@ -146,6 +153,7 @@ class ContextLoader {
         if (!$this->loadCache()) {
             $this->loadContextConfiguration();
             $this->loadFileConfiguration();
+            $this->injectExtensionConfiguration();
             $this->buildCache();
         }
 
@@ -230,6 +238,9 @@ class ContextLoader {
     protected function loadConfigurationFile($configurationFile) {
         // Load config file
         if (file_exists($configurationFile)) {
+            // Keep this variable for automatic injection into requried files!
+            $contextLoader = $this;
+
             // Load configuration file
             $retConf = require $configurationFile;
 
@@ -243,6 +254,23 @@ class ContextLoader {
     }
 
     /**
+     * Inject dynamic extension configuration
+     */
+    protected function injectExtensionConfiguration() {
+        if (!empty($this->extensionConfList)) {
+            $extConf = &$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'];
+
+            foreach ($this->extensionConfList as $extension => $settingList) {
+                if (!empty($extConf[$extension])) {
+                    $conf = unserialize($extConf[$extension]);
+                    $conf = array_merge($conf, $settingList);
+                    $extConf[$extension] = serialize($conf);
+                }
+            }
+        }
+    }
+
+    /**
      * Append context name to sitename (if not production)
      *
      * @return $this
@@ -251,6 +279,37 @@ class ContextLoader {
         if (!$this->applicationContext->isProduction()) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] .= ' [[' . strtoupper((string)$this->applicationContext) . ']]';
         }
+        return $this;
+    }
+
+    /**
+     * Set extension configuration value
+     *
+     * @param string $extension Extension name
+     * @param string $setting   Configuration setting name
+     * @param mixed  $value     Configuration value
+     * @return $this
+     */
+    public function setExtensionConfiguration($extension, $setting, $value = null) {
+        $this->extensionConfList[$extension][$setting] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set extension configuration value (by list)
+     *
+     * @param string $extension    Extension name
+     * @param array  $settingList  List of settings
+     * @return $this
+     */
+    public function setExtensionConfigurationList($extension, array $settingList) {
+        if (empty($this->extensionConfList[$extension])) {
+            $this->extensionConfList[$extension] = $settingList;
+        } else {
+            $this->extensionConfList[$extension] = array_merge($this->extensionConfList[$extension], $settingList);
+        }
+
         return $this;
     }
 }
