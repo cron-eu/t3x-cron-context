@@ -11,10 +11,10 @@ return array(
         'im_version_5' => 'gm',
     ),
     'DB' => array(
-        'database' => 'typo3',
-        'host'     => 'mysql',
-        'port'     => '3306',
-        'username' => 'dev',
-        'password' => 'dev',
+        'database' => $_ENV['MYSQL_DB']   ?: 'typo3',
+        'host'     => $_ENV['MYSQL_HOST'] ?: 'mysql',
+        'port'     => $_ENV['MYSQL_PORT'] ?: '3306',
+        'username' => $_ENV['MYSQL_USER'] ?: 'dev',
+        'password' => $_ENV['MYSQL_PASS'] ?: 'dev',
     ),
 );

@@ -44,6 +44,16 @@ TYPO3_CONTEXT=Production/Live/Server4711 (specific live server configuration):
 - `typo3conf/AdditionalConfiguration/Development/Live.php`
 - `typo3conf/AdditionalConfiguration/Development/Live/Server4711.php`
 
+## Environment variables
+
+cron_context will read the TYPO3 DB credentials from the following environment variables if present:
+
+* MYSQL_DB
+* MYSQL_HOST
+* MYSQL_PORT
+* MYSQL_USER
+* MYSQL_PASS
+
 ## Advanced usage
 
 If you don't want to use `EXT:cron_context/Configuration/` you can customize your own loading in `typo3conf/AdditionalConfiguration.php`
