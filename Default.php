@@ -8,7 +8,7 @@ if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
 
 require_once __DIR__ . '/ContextLoader.php';
 
-if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 8) {
+if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 8000000) {
     $GLOBALS['TYPO3_CONF_VARS']['DB']['database'] = $_ENV['MYSQL_DB']   ?: $GLOBALS['TYPO3_CONF_VARS']['DB']['database'];
     $GLOBALS['TYPO3_CONF_VARS']['DB']['host']     = $_ENV['MYSQL_HOST'] ?: $GLOBALS['TYPO3_CONF_VARS']['DB']['host'];
     $GLOBALS['TYPO3_CONF_VARS']['DB']['port']     = $_ENV['MYSQL_PORT'] ?: $GLOBALS['TYPO3_CONF_VARS']['DB']['port'];
