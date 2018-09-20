@@ -18,6 +18,7 @@ return array(
         'password' => $_ENV['MYSQL_PASS'] ?: 'dev',
         'Connections' => array(
             'Default' => array(
+                'driver'   => 'mysqli',
                 'dbname'   => $_ENV['MYSQL_DB']   ?: 'typo3',
                 'host'     => $_ENV['MYSQL_HOST'] ?: 'mysql',
                 'port'     => $_ENV['MYSQL_PORT'] ?: '3306',
