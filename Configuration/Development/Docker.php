@@ -6,9 +6,9 @@ return array(
         'doNotCheckReferer'   => TRUE,
     ),
     'GFX' => array(
-        'im_path'      => '/usr/bin/',
-        'im_path_lzw'  => '/usr/bin/',
-        'im_version_5' => 'gm',
+        'processor_path'      => '/usr/bin/',
+        'processor_path_lzw'  => '/usr/bin/',
+        'processor' => 'GraphicsMagick',
     ),
     'DB' => array(
         'database' => $_ENV['MYSQL_DB']   ?: 'typo3',
