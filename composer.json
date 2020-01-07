@@ -1,9 +1,11 @@
 {
-	"name": "cron/cron-context",
-	"type": "typo3-cms-extension",
-	"description": "TYPO3_CONTEXT configuration loader",
-	"homepage": "https://gitlab.cron.eu/cron/t3x-cron_context",
-	"license": ["GPL-2.0+"],
-	"keywords": ["TYPO3 CMS"]
+    "name": "cron/cron-context",
+    "type": "typo3-cms-extension",
+    "description": "TYPO3_CONTEXT configuration loader",
+    "homepage": "https://gitlab.cron.eu/cron/t3x-cron_context",
+    "license": ["GPL-2.0+"],
+    "keywords": ["TYPO3 CMS"],
+    "require": {
+        "typo3/cms-core": "^9.5"
+    }
 }
-
