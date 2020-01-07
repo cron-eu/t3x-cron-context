@@ -86,10 +86,5 @@ If you don't want to use `EXT:cron_context/Configuration/` you can customize you
 For extension configuration manipulation:
 
     <?php
-    /** @var \Cron\CronContext\ContextLoader $contextLoader */
-    $contextLoader
-        ->setExtensionConfiguration('foobar', 'key', 'value');
-        ->setExtensionConfigurationList('bar', array(
-        'setting1' => 'value1',
-        'setting2' => 'value2',
-    ));
+
+    $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['foobar']['key'] => 'value';

@@ -182,7 +182,6 @@ class ContextLoader
             $this
                 ->loadContextConfiguration()
                 ->loadFileConfiguration()
-                ->injectExtensionConfiguration()
                 ->buildCache();
         }
 
@@ -306,28 +305,6 @@ class ContextLoader
     }
 
     /**
-     * Inject dynamic extension configuration
-     *
-     * @return $this
-     */
-    protected function injectExtensionConfiguration()
-    {
-        if (!empty($this->extensionConfList)) {
-            $extConf = &$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'];
-
-            foreach ($this->extensionConfList as $extension => $settingList) {
-                if (!empty($extConf[$extension])) {
-                    $conf                = unserialize($extConf[$extension]);
-                    $conf                = array_merge($conf, $settingList);
-                    $extConf[$extension] = serialize($conf);
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * Append context name to sitename (if not production)
      *
      * @return $this
@@ -356,9 +333,7 @@ class ContextLoader
      */
     public function setExtensionConfiguration($extension, $setting, $value = null)
     {
-        $this->extensionConfList[$extension][$setting] = $value;
-
-        return $this;
+        throw new \Exception('Please do not use this function anymore! It\'s not compatible to the way the extConf is handled in TYPO3 >= 9. Use $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTENSIONS\'][\''.$extension.'\'][\''.$setting.'\'] = \'' . $value . '\'; instead.');
     }
 
     /**
@@ -371,12 +346,6 @@ class ContextLoader
      */
     public function setExtensionConfigurationList($extension, array $settingList)
     {
-        if (empty($this->extensionConfList[$extension])) {
-            $this->extensionConfList[$extension] = $settingList;
-        } else {
-            $this->extensionConfList[$extension] = array_merge($this->extensionConfList[$extension], $settingList);
-        }
-
-        return $this;
+        $this->setExtensionConfiguration($extension, key($settingList), current($settingList));
     }
 }
