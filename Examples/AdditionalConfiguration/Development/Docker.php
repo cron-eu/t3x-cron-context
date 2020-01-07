@@ -1,10 +1,10 @@
 <?php
 
-return array(
-//    'DB' => array(
+return [
+//    'DB' => [
 //        'host'     => 'localhost',
 //        'database' => '',
 //        'username' => '',
 //        'password' => '',
-//    ),
-);
+//    ],
+];
