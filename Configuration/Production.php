@@ -1,16 +1,16 @@
 <?php
 
-return array(
-    'SYS' => array(
+return [
+    'SYS' => [
         'devIPmask'     => '',
         'sqlDebug'      => 0,
         'displayErrors' => 0,
-    ),
-    'BE' => array(
+    ],
+    'BE' => [
         'debug' => FALSE,
-    ),
-    'FE' => array(
+    ],
+    'FE' => [
         'disableNoCacheParameter' => TRUE,
         'debug' => FALSE,
-    ),
-);
+    ],
+];

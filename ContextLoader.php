@@ -48,14 +48,14 @@ class ContextLoader
      *
      * @var array
      */
-    protected $contextList = array();
+    protected $contextList = [];
 
     /**
      * Configuration path list (simple files)
      *
      * @var array
      */
-    protected $confPathList = array();
+    protected $confPathList = [];
 
     /**
      * Cache file (only set if cache is used)
@@ -63,13 +63,6 @@ class ContextLoader
      * @var null|string
      */
     protected $cacheFile;
-
-    /**
-     * List of extension configuration overrides
-     *
-     * @var array
-     */
-    protected $extensionConfList = array();
 
     /**
      * Construct
@@ -195,7 +188,7 @@ class ContextLoader
      */
     protected function buildContextList()
     {
-        $contextList    = array();
+        $contextList    = [];
         $currentContext = $this->applicationContext;
         do {
             $contextList[] = (string)$currentContext;

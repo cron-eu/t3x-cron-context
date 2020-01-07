@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
 	'title' => 'Context configuration',
 	'description' => 'TYPO3_CONTEXT configuration loader',
 	'category' => 'system',
@@ -18,20 +18,20 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 1,
 	'lockType' => '',
 	'author' => 'Markus Blaschke',
-	'author_email' => 'mb@cron.eu',
+	'author_email' => 'info@cron.eu',
 	'author_company' => 'cron IT GmbH',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
 	'version' => '1.2.5',
-	'constraints' => array(
-		'depends' => array(
+	'constraints' => [
+		'depends' => [
 			'typo3' => '6.2.0-9.5.99',
-		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
-	),
-	'suggests' => array(
-	),
-);
+		],
+		'conflicts' => [
+		],
+		'suggests' => [
+		],
+	],
+	'suggests' => [
+	],
+];

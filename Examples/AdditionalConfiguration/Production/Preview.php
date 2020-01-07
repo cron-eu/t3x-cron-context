@@ -1,13 +1,13 @@
 <?php
 
-return array(
-//    'GFX' => array(
+return [
+//    'GFX' => [
 //        'colorspace' => NULL,
-//    ),
-//    'DB' => array(
+//    ],
+//    'DB' => [
 //        'host'     => 'localhost',
 //        'database' => '',
 //        'username' => '',
 //        'password' => '',
-//    ),
-);
+//    ],
+];
