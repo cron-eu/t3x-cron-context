@@ -25,11 +25,11 @@ if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(
 $confLoader = new \Cron\CronContext\ContextLoader();
 $confLoader
         // Add EXT:cron_context default context configuration
-    ->addContextConfiguration(PATH_site . '/typo3conf/ext/cron_context/Configuration/')
+    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/ext/cron_context/Configuration/')
         // Add project context configuration
-    ->addContextConfiguration(PATH_site . '/typo3conf/AdditionalConfiguration')
+    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration')
         // Add local configuration
-    ->addConfiguration(PATH_site . '/typo3conf/AdditionalConfiguration/Local.php')
+    ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration/Local.php')
         // Load configuration files (maybe cached)
     ->loadConfiguration()
         // Add context name to sitename (if in development context)

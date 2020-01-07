@@ -3,6 +3,7 @@
 namespace Cron\CronContext;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Core\Environment;
 
 /**
  * Additional configuration loader (based on context)
@@ -123,7 +124,7 @@ class ContextLoader
     public function useCache()
     {
         // TODO: maybe the caching is not safe for race conditions
-        $this->cacheFile = PATH_site . '/typo3temp/Cache/Code/cache_phpcode/cron_context_conf.php';
+        $this->cacheFile = Environment::getPublicPath() . '/typo3temp/var/Cache/Code/cache_phpcode/cron_context_conf.php';
 
         return $this;
     }
