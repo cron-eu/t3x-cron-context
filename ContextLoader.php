@@ -84,7 +84,7 @@ class ContextLoader
      */
     public function init()
     {
-        $this->applicationContext = GeneralUtility::getApplicationContext();
+        $this->applicationContext = Environment::getContext();
 
         return $this;
     }
