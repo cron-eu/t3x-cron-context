@@ -9,13 +9,29 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_hash
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_pages']['backend'] =
     'TYPO3\\CMS\\Core\\Cache\\Backend\\TransientMemoryBackend';
 
+$logWriterConf = [
+    'TYPO3' => [
+        'CMS' => [
+            'deprecations' => [
+                'writerConfiguration' => [
+                    \TYPO3\CMS\Core\Log\LogLevel::NOTICE => [
+                        \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
+                            'logFileInfix' => 'deprecations'
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$GLOBALS['TYPO3_CONF_VARS']['LOG'] = array_replace_recursive($GLOBALS['TYPO3_CONF_VARS']['LOG'], $logWriterConf);
+
 return [
     'SYS' => [
         'trustedHostsPattern'  => '.*',
         'devIPmask'            => '*',
         'sqlDebug'             => 1,
         'displayErrors'        => 1,
-        'enableDeprecationLog' => 'file',
         'systemLogLevel'       => 0,
     ],
     'BE'  => [
