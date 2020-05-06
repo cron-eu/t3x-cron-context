@@ -16,7 +16,7 @@ $logWriterConf = [
                 'writerConfiguration' => [
                     \TYPO3\CMS\Core\Log\LogLevel::NOTICE => [
                         \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
-                            'logFile' => 'typo3temp/var/logs/deprecations.log'
+                            'logFileInfix' => 'deprecations'
                         ],
                     ],
                 ],
