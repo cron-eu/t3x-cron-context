@@ -2,7 +2,6 @@
 
 namespace Cron\CronContext;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Core\Environment;
 
 /**
