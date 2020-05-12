@@ -2,7 +2,6 @@
 
 namespace Cron\CronContext;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Core\Environment;
 
 /**
@@ -84,7 +83,7 @@ class ContextLoader
      */
     public function init()
     {
-        $this->applicationContext = GeneralUtility::getApplicationContext();
+        $this->applicationContext = Environment::getContext();
 
         return $this;
     }
