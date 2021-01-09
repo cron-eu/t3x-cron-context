@@ -1,10 +1,10 @@
-[like(applicationContext, '/(Development|Staging|Test|Preview|Docker)/')]
+[like(applicationContext, '/(Development|Test|Preview|Stage|Staging|Docker|VM)/')]
 page.32524 = COA
 page.32524 {
     10 = TEXT
     10.value (
         <style>
-            #tx-cronmaintenance-environment-banner {
+            #tx-croncontext-environment-banner {
                 position: fixed;
                 width: 400px;
                 right: -120px; top: 70px;
@@ -23,37 +23,29 @@ page.32524 {
     )
 
     20 = TEXT
-    20.value = <div id="tx-cronmaintenance-environment-banner" onclick="this.style.display = 'none'"
+    20.value = <div id="tx-croncontext-environment-banner" onclick="this.style.display = 'none'"
 
     30 = TEXT
     30.value =
     30.noTrimWrap = | style="|">|
 
     40 = TEXT
-    40.value = Entwicklungsumg. !!
+    40.value := getEnv(TYPO3_CONTEXT)
 
     50 = TEXT
     50.value = </div>
 }
 
-[applicationContext == 'Production/Docker']
+[like(applicationContext, '/Production\/(Docker|VM)/')]
+# Non critical since it's only local -> green
 page.32524.30.value = background:green; color: #ffffff;
-page.32524.40.value = Production/Docker !!
 
-[applicationContext == 'Production/Preview']
+[like(applicationContext, '/Production\/(Test|Preview)/')]
+# Rather critical since it's on the production server -> red
 page.32524.30.value = background:red; color: #ffffff;
-page.32524.40.value = Preview-Umg. !!
 
-[applicationContext == 'Production/Test']
-page.32524.30.value = background:red; color: #ffffff;
-page.32524.40.value = Test-Umg. !!
-
-[applicationContext == 'Production/Staging']
+[like(applicationContext, 'Testing*')]
+# Medium critical since it's on the staging/testing server -> yellow
 page.32524.30.value = background:yellow; color: #000000;
-page.32524.40.value = Staging-Umg. !!
-
-[applicationContext == 'Staging/*']
-page.32524.30.value = background:yellow; color: #000000;
-page.32524.40.value = Staging-Umg. !!
 
 [global]
