@@ -36,11 +36,11 @@ page.32524 {
     50.value = </div>
 }
 
-[like(applicationContext, '/Production\/(Docker|VM)/')]
+[like(applicationContext, '/Production\\/(Docker|VM)/')]
 # Non critical since it's only local -> green
 page.32524.30.value = background:green; color: #ffffff;
 
-[like(applicationContext, '/Production\/(Test|Preview)/')]
+[like(applicationContext, '/Production\\/(Test|Preview)/')]
 # Rather critical since it's on the production server -> red
 page.32524.30.value = background:red; color: #ffffff;
 
