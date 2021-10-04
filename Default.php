@@ -8,11 +8,21 @@ if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
 
 require_once __DIR__ . '/ContextLoader.php';
 
-$GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname']   = $_ENV['MYSQL_DB']   ?? $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'];
-$GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host']     = $_ENV['MYSQL_HOST'] ?? $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'];
-$GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port']     = $_ENV['MYSQL_PORT'] ?? $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'];
-$GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user']     = $_ENV['MYSQL_USER'] ?? $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'];
-$GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = $_ENV['MYSQL_PASS'] ?? $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'];
+if (isset($_ENV['MYSQL_DB'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = $_ENV['MYSQL_DB'];
+}
+if (isset($_ENV['MYSQL_HOST'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = $_ENV['MYSQL_HOST'];
+}
+if (isset($_ENV['MYSQL_PORT'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = $_ENV['MYSQL_PORT'];
+}
+if (isset($_ENV['MYSQL_USER'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = $_ENV['MYSQL_USER'];
+}
+if (isset($_ENV['MYSQL_PASS'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = $_ENV['MYSQL_PASS'];
+}
 
 $confLoader = new \Cron\CronContext\ContextLoader();
 $confLoader
