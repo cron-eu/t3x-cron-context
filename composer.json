@@ -1,9 +1,9 @@
 {
-  "name": "cron/cron-context",
+  "name": "cron-eu/cron-context",
   "type": "typo3-cms-extension",
   "description": "TYPO3_CONTEXT configuration loader",
-  "homepage": "https://git.cron.eu/cron/t3x-cron_context",
-  "license": ["proprietary"],
+  "homepage": "https://github.com/cron-eu/t3x-cron-context",
+  "license": ["GPL-2.0-or-later"],
   "keywords": ["TYPO3 CMS"],
   "require": {
     "typo3/cms-core": "^9.5 || ^10.4"
