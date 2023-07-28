@@ -4,10 +4,12 @@
 
 Install extension via `composer` and add `typo3conf/AdditionalConfiguration.php` (or use symlinks):
 
-    <?php
-    defined('TYPO3_MODE') || exit('Access denied.');
+```
+<?php
+defined('TYPO3_MODE') || exit('Access denied.');
 
-    require_once __DIR__ . '/ext/cron_context/Default.php';
+require_once __DIR__ . '/ext/cron_context/Default.php';
+```
 
 Copy `EXT:cron_context/Examples/AdditionalConfiguration/` to `typo3conf/AdditionalConfiguration/`
 
@@ -58,33 +60,28 @@ cron_context will read the TYPO3 DB credentials from the following environment v
 
 If you don't want to use `EXT:cron_context/Configuration/` you can customize your own loading in `typo3conf/AdditionalConfiguration.php`
 
-    <?php
-    defined('TYPO3_MODE') || exit('Access denied.');
+```php
+<?php
+defined('TYPO3_MODE') || exit('Access denied.');
 
-    // Prevent double loading
-    if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
-        return;
-    }
+// Prevent double loading
+if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
+    return;
+}
 
-    require_once __DIR__ . '/ext/cron_context/ContextLoader.php';
+require_once __DIR__ . '/ext/cron_context/ContextLoader.php';
 
-    $confLoader = new \Cron\CronContext\ContextLoader();
-    $confLoader
-            // Add project context configuration
-        ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration')
-            // Add local configuration
-        ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration/Local.php')
-            // Use TYPO3_CONF caching (only in production context)
-        ->useCacheInProduction()
-            // Load configuration files (maybe cached)
-        ->loadConfiguration()
-            // Add context name to sitename (if in development context)
-        ->appendContextNameToSitename();
-    unset($confLoader);
-
-
-For extension configuration manipulation:
-
-    <?php
-
-    $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['foobar']['key'] => 'value';
+$confLoader = new \Cron\CronContext\ContextLoader();
+$confLoader
+        // Add project context configuration
+    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration')
+        // Add local configuration
+    ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration/Local.php')
+        // Use TYPO3_CONF caching (only in production context)
+    ->useCacheInProduction()
+        // Load configuration files (maybe cached)
+    ->loadConfiguration()
+        // Add context name to sitename (if in development context)
+    ->appendContextNameToSitename();
+unset($confLoader);
+```
