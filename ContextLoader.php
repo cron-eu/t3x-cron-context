@@ -116,7 +116,7 @@ class ContextLoader
     public function useCache()
     {
         // TODO: maybe the caching is not safe for race conditions
-        $this->cacheFile = Environment::getPublicPath() . '/typo3temp/var/Cache/Code/cache_phpcode/cron_context_conf.php';
+        $this->cacheFile = Environment::getVarPath() . '/cache/code/cron_context_conf.php';
 
         return $this;
     }
