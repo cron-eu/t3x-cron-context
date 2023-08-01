@@ -45,10 +45,13 @@ return [
     'BE'  => [
         'installToolPassword' => '$P$Cp1V/nMasgbH9PTywUhYxaBxY4tRZ1.', // dev
         'debug'               => true,
-        'sessionTimeout'      => '360000'
+        'sessionTimeout'      => '360000',
+        'requireMfa'          => 0,
+        'loginRateLimit'      => 0,
     ],
     'FE'  => [
         'disableNoCacheParameter' => false,
         'debug'                   => true,
+        'loginRateLimit'          => 0,
     ],
 ];
