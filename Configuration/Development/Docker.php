@@ -9,8 +9,6 @@ return [
         'trustedHostsPattern' => '.*'
     ],
     'GFX' => [
-        'processor_path'      => '/usr/bin/',
-        'processor_path_lzw'  => '/usr/bin/',
         'processor' => 'GraphicsMagick',
     ],
     'DB' => [
