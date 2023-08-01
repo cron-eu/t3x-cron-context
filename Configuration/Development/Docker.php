@@ -6,12 +6,9 @@ return [
         'transport_smtp_server' => 'mail:1025'
     ],
     'SYS' => [
-        'trustedHostsPattern' => '.*',
-        'doNotCheckReferer'   => TRUE,
+        'trustedHostsPattern' => '.*'
     ],
     'GFX' => [
-        'processor_path'      => '/usr/bin/',
-        'processor_path_lzw'  => '/usr/bin/',
         'processor' => 'GraphicsMagick',
     ],
     'DB' => [
