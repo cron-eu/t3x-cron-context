@@ -32,7 +32,7 @@ $confLoader
     ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration')
         // Add local configuration
     ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration/Local.php')
-        // Load configuration files (maybe cached)
+        // Load configuration files
     ->loadConfiguration()
         // Add context name to sitename (if in development context)
     ->appendContextNameToSitename();
