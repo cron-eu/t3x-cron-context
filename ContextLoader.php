@@ -57,13 +57,6 @@ class ContextLoader
     protected $confPathList = [];
 
     /**
-     * Cache file (only set if cache is used)
-     *
-     * @var null|string
-     */
-    protected $cacheFile;
-
-    /**
      * Construct
      */
     public function __construct()
@@ -109,14 +102,13 @@ class ContextLoader
     }
 
     /**
-     * Use cache
+     * Use cache (deprecated)
      *
      * return $this;
      */
     public function useCache()
     {
-        // TODO: maybe the caching is not safe for race conditions
-        $this->cacheFile = Environment::getPublicPath() . '/typo3temp/var/Cache/Code/cache_phpcode/cron_context_conf.php';
+        trigger_error('cron_context: Calling ContextLoader::useCache is deprecated', E_USER_DEPRECATED);
 
         return $this;
     }
@@ -128,9 +120,7 @@ class ContextLoader
      */
     public function useCacheInProduction()
     {
-        if ($this->applicationContext->isProduction()) {
-            $this->useCache();
-        }
+        trigger_error('cron_context: Calling ContextLoader::useCacheInProduction is deprecated', E_USER_DEPRECATED);
 
         return $this;
     }
@@ -170,12 +160,9 @@ class ContextLoader
      */
     public function loadConfiguration()
     {
-        if (!$this->loadCache()) {
-            $this
-                ->loadContextConfiguration()
-                ->loadFileConfiguration()
-                ->buildCache();
-        }
+        $this
+            ->loadContextConfiguration()
+            ->loadFileConfiguration();
 
         return $this;
     }
@@ -195,39 +182,6 @@ class ContextLoader
 
         // Reverse list, general first (eg. PRODUCTION), then specific last (eg. SERVER)
         $this->contextList = array_reverse($contextList);
-
-        return $this;
-    }
-
-    /**
-     * Load from cache
-     */
-    protected function loadCache()
-    {
-        $ret = false;
-
-        if ($this->cacheFile && file_exists($this->cacheFile)) {
-            $conf = unserialize(file_get_contents($this->cacheFile));
-
-            if (!empty($conf)) {
-                $GLOBALS['TYPO3_CONF_VARS'] = $conf;
-                $ret                        = true;
-            }
-        }
-
-        return $ret;
-    }
-
-    /**
-     * Build context config cache
-     *
-     * @return $this
-     */
-    protected function buildCache()
-    {
-        if ($this->cacheFile) {
-            file_put_contents($this->cacheFile, serialize($GLOBALS['TYPO3_CONF_VARS']));
-        }
 
         return $this;
     }
