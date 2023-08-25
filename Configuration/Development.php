@@ -1,8 +1,7 @@
 <?php
 
 // Disable frontend caching (single hit caching)
-$configureCache = function($name) {
-    $index = $name;
+$configureCache = function(string $index) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$index]['options'] = [];
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$index]['backend'] =
         'TYPO3\\CMS\\Core\\Cache\\Backend\\TransientMemoryBackend';

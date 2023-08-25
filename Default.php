@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3') || die('Access densied.');
+defined('TYPO3') || die('Access denied.');
 
 // Prevent double loading
 if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {

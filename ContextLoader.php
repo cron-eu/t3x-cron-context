@@ -89,13 +89,11 @@ class ContextLoader
     public function checkEnvironment()
     {
         // Check CLI mode
-        if (!Environment::isCli()) {
-            $contextEnv = getenv('TYPO3_CONTEXT');
-
-            if (empty($contextEnv)) {
-                echo '[ERROR] TYPO3_CONTEXT not set or found for additional.php' . "\n";
-                exit(1);
-            }
+        if (!Environment::isCli() &&
+            empty(getenv('TYPO3_CONTEXT'))
+        ) {
+            echo '[ERROR] TYPO3_CONTEXT not set or found for additional.php' . "\n";
+            exit(1);
         }
 
         return $this;
