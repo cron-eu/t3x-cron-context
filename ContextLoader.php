@@ -10,26 +10,26 @@ use TYPO3\CMS\Core\Core\Environment;
  * Examples:
  *
  * TYPO3_CONTEXT=Production
- *    -> typo3conf/AdditionalConfiguration/Production.php
+ *    -> config/system/additional/Production.php
  *
  * TYPO3_CONTEXT=Testing
- *    -> typo3conf/AdditionalConfiguration/Testing.php
+ *    -> config/system/additional/Testing.php
  *
  * TYPO3_CONTEXT=Development
- *    -> typo3conf/AdditionalConfiguration/Development.php
+ *    -> config/system/additional/Development.php
  *
  * TYPO3_CONTEXT=Production/Staging
- *    -> typo3conf/AdditionalConfiguration/Production.php
- *    -> typo3conf/AdditionalConfiguration/Production/Staging.php
+ *    -> config/system/additional/Production.php
+ *    -> config/system/additional/Production/Staging.php
  *
  * TYPO3_CONTEXT=Production/Live
- *    -> typo3conf/AdditionalConfiguration/Production.php
- *    -> typo3conf/AdditionalConfiguration/Production/Live.php
+ *    -> config/system/additional/Production.php
+ *    -> config/system/additional/Production/Live.php
  *
  * TYPO3_CONTEXT=Production/Live/Server4711
- *    -> typo3conf/AdditionalConfiguration/Production.php
- *    -> typo3conf/AdditionalConfiguration/Production/Live.php
- *    -> typo3conf/AdditionalConfiguration/Production/Live/Server4711.php
+ *    -> config/system/additional/Production.php
+ *    -> config/system/additional/Production/Live.php
+ *    -> config/system/additional/Production/Live/Server4711.php
  *
  */
 class ContextLoader
@@ -89,38 +89,14 @@ class ContextLoader
     public function checkEnvironment()
     {
         // Check CLI mode
-        if (defined('TYPO3_cliMode')) {
+        if (!Environment::isCli()) {
             $contextEnv = getenv('TYPO3_CONTEXT');
 
             if (empty($contextEnv)) {
-                echo '[ERROR] TYPO3_CONTEXT not set or found for AdditionalConfiguration.php' . "\n";
+                echo '[ERROR] TYPO3_CONTEXT not set or found for additional.php' . "\n";
                 exit(1);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * Use cache (deprecated)
-     *
-     * return $this;
-     */
-    public function useCache()
-    {
-        trigger_error('cron_context: Calling ContextLoader::useCache is deprecated', E_USER_DEPRECATED);
-
-        return $this;
-    }
-
-    /**
-     * Use cache if TYPO3_CONTEXT is production
-     *
-     * @return $this
-     */
-    public function useCacheInProduction()
-    {
-        trigger_error('cron_context: Calling ContextLoader::useCacheInProduction is deprecated', E_USER_DEPRECATED);
 
         return $this;
     }
@@ -266,20 +242,6 @@ class ContextLoader
         }
 
         return $this;
-    }
-
-    /**
-     * Set extension configuration value
-     *
-     * @param string $extension Extension name
-     * @param string $setting   Configuration setting name
-     * @param mixed  $value     Configuration value
-     *
-     * @return $this
-     */
-    public function setExtensionConfiguration($extension, $setting, $value = null)
-    {
-        throw new \Exception('Please do not use this function anymore! It\'s not compatible to the way the extConf is handled in TYPO3 >= 9. Use $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTENSIONS\'][\''.$extension.'\'][\''.$setting.'\'] = \'' . $value . '\'; instead.');
     }
 
     /**

@@ -2,16 +2,16 @@
 
 ## Installation
 
-Install extension via `composer` and add `typo3conf/AdditionalConfiguration.php` (or use symlinks):
+Install extension via `composer` and add `config/system/additional.php` (or use symlinks):
 
 ```
 <?php
-defined('TYPO3_MODE') || exit('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
-require_once __DIR__ . '/ext/cron_context/Default.php';
+require_once \TYPO3\CMS\Core\Core\Environment::getProjectPath() . '/vendor/cron-eu/cron-context/Default.php';
 ```
 
-Copy `EXT:cron_context/Examples/AdditionalConfiguration/` to `typo3conf/AdditionalConfiguration/`
+Copy `EXT:cron_context/Examples/additional/` to `config/system/additional/`
 
 Hint: You don't need to install this extension inside TYPO3 CMS.
 
@@ -20,31 +20,31 @@ Hint: You don't need to install this extension inside TYPO3 CMS.
 When using `EXT:cron_context/Default.php` following configuration directories are used (in this order):
 
 - `EXT:cron_context/Configuration/`
-- `typo3conf/AdditionalConfiguration/`
+- `config/system/additional/`
 
 ### Context examples
 
 TYPO3_CONTEXT=Production (default):
-- `typo3conf/AdditionalConfiguration/Production.php`
+- `config/system/additional/Production.php`
 
 TYPO3_CONTEXT=Testing (eg. for Unit tests):
-- `typo3conf/AdditionalConfiguration/Testing.php`
+- `config/system/additional/Testing.php`
 
 TYPO3_CONTEXT=Development (for development):
-- `typo3conf/AdditionalConfiguration/Development.php`
+- `config/system/additional/Development.php`
 
 TYPO3_CONTEXT=Development/Docker (for development inside docker boilerplate):
-- `typo3conf/AdditionalConfiguration/Development.php`
-- `typo3conf/AdditionalConfiguration/Development/Docker.php`
+- `config/system/additional/Development.php`
+- `config/system/additional/Development/Docker.php`
 
 TYPO3_CONTEXT=Production/Preview (for preview):
-- `typo3conf/AdditionalConfiguration/Development.php`
-- `typo3conf/AdditionalConfiguration/Development/Preview.php`
+- `config/system/additional/Development.php`
+- `config/system/additional/Development/Preview.php`
 
 TYPO3_CONTEXT=Production/Live/Server4711 (specific live server configuration):
-- `typo3conf/AdditionalConfiguration/Development.php`
-- `typo3conf/AdditionalConfiguration/Development/Live.php`
-- `typo3conf/AdditionalConfiguration/Development/Live/Server4711.php`
+- `config/system/additional/Development.php`
+- `config/system/additional/Development/Live.php`
+- `config/system/additional/Development/Live/Server4711.php`
 
 ## Environment variables
 
@@ -58,27 +58,25 @@ cron_context will read the TYPO3 DB credentials from the following environment v
 
 ## Advanced usage
 
-If you don't want to use `EXT:cron_context/Configuration/` you can customize your own loading in `typo3conf/AdditionalConfiguration.php`
+If you don't want to use `EXT:cron_context/Configuration/` you can customize your own loading in `config/system/additional.php`
 
 ```php
 <?php
-defined('TYPO3_MODE') || exit('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
 // Prevent double loading
 if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
     return;
 }
 
-require_once __DIR__ . '/ext/cron_context/ContextLoader.php';
+require_once __DIR__ . '/ContextLoader.php';
 
 $confLoader = new \Cron\CronContext\ContextLoader();
 $confLoader
         // Add project context configuration
-    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration')
+    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/system/additional')
         // Add local configuration
-    ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration/Local.php')
-        // Use TYPO3_CONF caching (only in production context)
-    ->useCacheInProduction()
+    ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/system/additional/local.php')
         // Load configuration files (maybe cached)
     ->loadConfiguration()
         // Add context name to sitename (if in development context)
