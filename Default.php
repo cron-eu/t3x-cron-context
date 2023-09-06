@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') || exit('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
 // Prevent double loading
 if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
@@ -27,11 +27,11 @@ if (isset($_ENV['MYSQL_PASS'])) {
 $confLoader = new \Cron\CronContext\ContextLoader();
 $confLoader
         // Add EXT:cron_context default context configuration
-    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/ext/cron_context/Configuration/')
+    ->addContextConfiguration(__DIR__ . '/Configuration/')
         // Add project context configuration
-    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration')
+    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/system/additional')
         // Add local configuration
-    ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/AdditionalConfiguration/Local.php')
+    ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/system/additional/local.php')
         // Load configuration files
     ->loadConfiguration()
         // Add context name to sitename (if in development context)
