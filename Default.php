@@ -8,6 +8,12 @@ if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
 
 require_once __DIR__ . '/ContextLoader.php';
 
+if (isset($_ENV['DDEV_DATABASE_FAMILY'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = 'db';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = 'db';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = 'db';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = 'db';
+}
 if (isset($_ENV['MYSQL_DB'])) {
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = $_ENV['MYSQL_DB'];
 }
