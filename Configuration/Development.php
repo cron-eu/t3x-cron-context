@@ -28,6 +28,10 @@ $logWriterConf = [
 ];
 $GLOBALS['TYPO3_CONF_VARS']['LOG'] = array_replace_recursive($GLOBALS['TYPO3_CONF_VARS']['LOG'], $logWriterConf);
 
+// Disable password policies (since it's annoying in dev contexts)
+$GLOBALS['TYPO3_CONF_VARS']['BE']['passwordPolicy'] = '';
+$GLOBALS['TYPO3_CONF_VARS']['FE']['passwordPolicy'] = '';
+
 return [
     'SYS' => [
         'trustedHostsPattern'  => '.*',
