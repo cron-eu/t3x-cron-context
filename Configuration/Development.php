@@ -42,10 +42,12 @@ return [
         'sessionTimeout'      => '360000',
         'requireMfa'          => 0,
         'loginRateLimit'      => 0,
+        'passwordPolicy'      => '', // disable password policies (since it's annoying in dev contexts)
     ],
     'FE'  => [
         'disableNoCacheParameter' => false,
         'debug'                   => true,
         'loginRateLimit'          => 0,
+        'passwordPolicy'          => '', // disable password policies
     ],
 ];
