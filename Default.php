@@ -8,32 +8,55 @@ if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
 
 require_once __DIR__ . '/ContextLoader.php';
 
-if (isset($_ENV['MYSQL_DB'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = $_ENV['MYSQL_DB'];
-}
-if (isset($_ENV['MYSQL_HOST'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = $_ENV['MYSQL_HOST'];
-}
-if (isset($_ENV['MYSQL_PORT'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = $_ENV['MYSQL_PORT'];
-}
-if (isset($_ENV['MYSQL_USER'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = $_ENV['MYSQL_USER'];
-}
-if (isset($_ENV['MYSQL_PASS'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = $_ENV['MYSQL_PASS'];
-}
+call_user_func(function() {
+    if (getenv('IS_DDEV_PROJECT') == 'true') {
+        // Hardcode defaults for a ddev installation
+        $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = 'db';
+        $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = 'db';
+        $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = 'db';
+        $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = 'db';
+    }
 
-$confLoader = new \Cron\CronContext\ContextLoader();
-$confLoader
+    foreach (['MYSQL_DB', 'DB_NAME', 'DB_DATABASE'] as $env) {
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = getenv($env);
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['driver'] = 'mysqli';
+        }
+    }
+    if (!empty(getenv('DB_DRIVER'))) {
+        $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['driver'] = getenv('DB_DRIVER');
+    }
+    foreach (['MYSQL_HOST', 'DB_HOST'] as $env) {
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = getenv($env);
+        }
+    }
+    foreach (['MYSQL_PORT', 'DB_PORT'] as $env) {
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = getenv($env);
+        }
+    }
+    foreach (['MYSQL_USER', 'DB_USER', 'DB_USERNAME'] as $env) {
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv($env);
+        }
+    }
+    foreach (['MYSQL_PASS', 'DB_PASS', 'DB_PASSWORD'] as $env) {
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv($env);
+        }
+    }
+
+    $confLoader = new \Cron\CronContext\ContextLoader();
+    $confLoader
         // Add EXT:cron_context default context configuration
-    ->addContextConfiguration(__DIR__ . '/Configuration/')
+        ->addContextConfiguration(__DIR__ . '/Configuration/')
         // Add project context configuration
-    ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/system/additional')
+        ->addContextConfiguration(\TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/system/additional')
         // Add local configuration
-    ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/system/additional/local.php')
+        ->addConfiguration(\TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/system/additional/local.php')
         // Load configuration files
-    ->loadConfiguration()
+        ->loadConfiguration()
         // Add context name to sitename (if in development context)
-    ->appendContextNameToSitename();
-unset($confLoader);
+        ->appendContextNameToSitename();
+});
