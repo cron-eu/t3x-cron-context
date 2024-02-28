@@ -50,11 +50,12 @@ TYPO3_CONTEXT=Production/Live/Server4711 (specific live server configuration):
 
 cron_context will read the TYPO3 DB credentials from the following environment variables if present:
 
-* MYSQL_DB
-* MYSQL_HOST
-* MYSQL_PORT
-* MYSQL_USER
-* MYSQL_PASS
+* MYSQL_DB or DB_NAME
+* MYSQL_HOST or DB_HOST
+* MYSQL_PORT or DB_PORT
+* MYSQL_USER or DB_USER
+* MYSQL_PASS or DB_PASS
+* DB_DRIVER (defaults to "mysqli" if not set and a DB_NAME is set)
 
 ## Advanced usage
 
