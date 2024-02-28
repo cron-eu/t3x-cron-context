@@ -9,7 +9,7 @@ if (defined('CRON_TYPO3_ADDITIONALCONFIGURATION')) {
 require_once __DIR__ . '/ContextLoader.php';
 
 call_user_func(function() {
-    if (isset($_ENV['DDEV_DATABASE_FAMILY'])) {
+    if (getenv('IS_DDEV_PROJECT') == 'true') {
         // Hardcode defaults for a ddev installation
         $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = 'db';
         $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = 'db';
