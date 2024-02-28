@@ -28,10 +28,6 @@ $logWriterConf = [
 ];
 $GLOBALS['TYPO3_CONF_VARS']['LOG'] = array_replace_recursive($GLOBALS['TYPO3_CONF_VARS']['LOG'], $logWriterConf);
 
-// Disable password policies (since it's annoying in dev contexts)
-$GLOBALS['TYPO3_CONF_VARS']['BE']['passwordPolicy'] = '';
-$GLOBALS['TYPO3_CONF_VARS']['FE']['passwordPolicy'] = '';
-
 return [
     'SYS' => [
         'trustedHostsPattern'  => '.*',
@@ -46,10 +42,12 @@ return [
         'sessionTimeout'      => '360000',
         'requireMfa'          => 0,
         'loginRateLimit'      => 0,
+        'passwordPolicy'      => '', // disable password policies (since it's annoying in dev contexts)
     ],
     'FE'  => [
         'disableNoCacheParameter' => false,
         'debug'                   => true,
         'loginRateLimit'          => 0,
+        'passwordPolicy'          => '', // disable password policies
     ],
 ];
