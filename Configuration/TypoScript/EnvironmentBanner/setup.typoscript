@@ -1,4 +1,4 @@
-[like(applicationContext, '/(Development|Test|Preview|Stage|Staging|Docker|VM)/')]
+[like(applicationContext, '/(Development|Test|Preview|Stage|Staging)/')]
 page.32524 = COA
 page.32524 {
     10 = TEXT
@@ -36,7 +36,7 @@ page.32524 {
     50.value = </div>
 }
 
-[like(applicationContext, '/Production\\/(Docker|VM)/')]
+[like(applicationContext, '/Production\\/(Docker|VM|DDEV)/')]
 # Non critical since it's only local -> green
 page.32524.30.value = background:green; color: #ffffff;
 
