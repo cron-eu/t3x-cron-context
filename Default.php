@@ -18,28 +18,28 @@ call_user_func(function() {
     }
 
     foreach (['MYSQL_DB', 'DB_NAME', 'DB_DATABASE'] as $env) {
-        if (isset($_ENV[$env])) {
-            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = $_ENV[$env];
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = getenv($env);
         }
     }
     foreach (['MYSQL_HOST', 'DB_HOST'] as $env) {
-        if (isset($_ENV[$env])) {
-            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = $_ENV[$env];
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = getenv($env);
         }
     }
     foreach (['MYSQL_PORT', 'DB_PORT'] as $env) {
-        if (isset($_ENV[$env])) {
-            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = $_ENV[$env];
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = getenv($env);
         }
     }
     foreach (['MYSQL_USER', 'DB_USER', 'DB_USERNAME'] as $env) {
-        if (isset($_ENV[$env])) {
-            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = $_ENV[$env];
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv($env);
         }
     }
     foreach (['MYSQL_PASS', 'DB_PASS', 'DB_PASSWORD'] as $env) {
-        if (isset($_ENV[$env])) {
-            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = $_ENV[$env];
+        if (!empty(getenv($env))) {
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv($env);
         }
     }
 
