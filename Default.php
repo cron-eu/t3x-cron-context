@@ -20,7 +20,11 @@ call_user_func(function() {
     foreach (['MYSQL_DB', 'DB_NAME', 'DB_DATABASE'] as $env) {
         if (!empty(getenv($env))) {
             $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = getenv($env);
+            $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['driver'] = 'mysqli';
         }
+    }
+    if (!empty(getenv('DB_DRIVER'))) {
+        $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['driver'] = getenv('DB_DRIVER');
     }
     foreach (['MYSQL_HOST', 'DB_HOST'] as $env) {
         if (!empty(getenv($env))) {

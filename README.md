@@ -55,6 +55,7 @@ cron_context will read the TYPO3 DB credentials from the following environment v
 * MYSQL_PORT or DB_PORT
 * MYSQL_USER or DB_USER
 * MYSQL_PASS or DB_PASS
+* DB_DRIVER (defaults to "mysqli" if not set and a DB_NAME is set)
 
 ## Advanced usage
 
