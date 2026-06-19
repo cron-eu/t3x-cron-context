@@ -92,6 +92,8 @@ class ContextLoader
         if (!Environment::isCli() &&
             empty(getenv('TYPO3_CONTEXT'))
         ) {
+            header('HTTP/1.1 500 Server error');
+            header('Cache-Control: no-cache, must-revalidate');
             echo '[ERROR] TYPO3_CONTEXT not set or found for additional.php' . "\n";
             exit(1);
         }
